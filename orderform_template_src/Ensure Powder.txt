@@ -1,0 +1,27 @@
+To CDC Pharmaceuticals
+CHRISTCHURCH	
+EMAIL:healthworks@cdc.co.nz
+
+Charge to:		
+Unichem Ilam Healthworks Pharmacy
+Tenancy #1
+110 Memorial Avenue
+Christchurch	
+
+#################################################################
+Deliver to:		
+Name:{name: font=Arial, size=24, bold=True}
+Address:
+	
+
+
+#################################################################
+
+Please supply:
+
+Ensure POWDER 850gm
+
+
+Vanilla:		_______	TINS x P/Code: 2504316
+
+Chocolate: 		_______	TINS x P/Code: 2504324

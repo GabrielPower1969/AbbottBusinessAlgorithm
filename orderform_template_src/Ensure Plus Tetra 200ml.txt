@@ -1,0 +1,21 @@
+To CDC Pharmaceuticals
+CHRISTCHURCH	
+EMAIL: healthworks@cdc.co.nz
+
+Charge to:
+Unichem Ilam Healthworks Pharmacy
+Tenancy #1
+110 Memorial Avenue
+Christchurch
+#################################################################
+Deliver to:
+Name: {name: font=Arial, size=24, bold=True}
+Address: {address: font=Arial, size=24, bold=True}
+#################################################################
+
+Please supply:
+{*content*Ensure Plus Tetra (200ml): font=Arial, size=36, bold=True}
+Banana:			{outer quantity: font=Arial, size=12, bold=True} trays of 27 x P/Code: 234885
+Chocolate:		{outer quantity: font=Arial, size=12, bold=True} trays of 27 x P/Code: 234680
+Fruit of the Forest:	{outer quantity: font=Arial, size=12, bold=True} trays of 27 x P/Code: 234893
+Vanilla:		{outer quantity: font=Arial, size=12, bold=True} trays of 27 x P/Code: 234672
