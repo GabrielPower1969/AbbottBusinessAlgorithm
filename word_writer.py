@@ -1,7 +1,7 @@
 from docx import Document
-from docx.shared import Inches, Pt
+from docx.shared import Inches, Pt, RGBColor
 from docx.enum.section import WD_ORIENT
-from datetime import datetime
+from docx.enum.text import WD_LINE_SPACING
 import re
 
 class WordWriter:
@@ -12,8 +12,26 @@ class WordWriter:
     def parse_style(self, style_string):
         """
         Parse style information from a string.
-        :param style_string: The style string, e.g., "font=Arial, size=24, bold=True".
+        :param style_string: The style string, e.g., "font=Arial, size=24, bold=True, color=FF0000".
+            Red: FF0000
+            Green: 00FF00
+            Blue: 0000FF
+            Black: 000000
+            White: FFFFFF
+            Yellow: FFFF00
+            Cyan: 00FFFF
+            Magenta: FF00FF
+            Gray: 808080
+            Orange: FFA500
+            Purple: 800080
+            Brown: A52A2A
+            You can use these values in your style strings to set the color
+            of text in your Word document.
+            For example, to set the text color to red, you would use color=FF0000.
+
+
         :return: A dictionary containing style information.
+
         """
         style_info = {}
         styles = style_string.split(", ")
@@ -23,6 +41,8 @@ class WordWriter:
                 value = int(value)
             elif key == 'bold':
                 value = value == 'True'
+            elif key == 'color':
+                value = RGBColor.from_string(value)
             style_info[key] = value
         return style_info
 
@@ -38,6 +58,8 @@ class WordWriter:
             run.font.size = Pt(style_info['size'])
         if 'bold' in style_info:
             run.bold = style_info['bold']
+        if 'color' in style_info:
+            run.font.color.rgb = style_info['color']
 
     def write_to_word(self, output_file):
         """
@@ -50,7 +72,7 @@ class WordWriter:
             return
 
         # Read the template file content
-        with open(self.template_file, 'r') as infile:
+        with open(self.template_file, 'r', encoding = 'utf-8') as infile:
             print(f"Reading template file: {self.template_file}")
             lines = infile.read().splitlines()
 
@@ -71,6 +93,7 @@ class WordWriter:
         # Add template content to the Word document
         for line in lines:
             p = document.add_paragraph()
+            p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.SINGLE  # Set line spacing to 1.0
             parts = re.split(r'(\{.*?\})', line)
             for part in parts:
                 if part.startswith('{') and part.endswith('}'):
@@ -84,6 +107,7 @@ class WordWriter:
                             self.apply_style(run, style_info)
                         else:
                             if key in self.data_dict:
+                                print(f"Inserting data for key: {key}")
                                 value = str(self.data_dict[key])
                                 run = p.add_run(value)
                                 self.apply_style(run, style_info)

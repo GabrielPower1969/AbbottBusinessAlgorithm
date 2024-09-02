@@ -54,3 +54,16 @@ coll = COLLECT(
 第二步：用命令行，打包“第一步”所有生成了/_internal，把它放到main.py的同级目录下；这里是所有需要的依赖，
 打包所有依赖
 pyinstaller --onefile --add-data "D:\\workspace\\Abbott\\SpecialFood_0727\\_internal;main/_internal" --add-data "D:\\workspace\\Abbott\\SpecialFood_0727\\orderform_template_src;orderform_template_src" --add-data "D:\\workspace\\Abbott\\SpecialFood_0727\\data;data" main.py
+
+
+************** 修改模板配置语法或者添加字段 begin **************
+def parse_style(self, style_string):
+def apply_style(self, run, style_info):
+************** 修改模板配置语法或者添加字段 end **************
+
+
+************** 提取row data 并新增字段 begin **************
+get_order_template_data（）方法中添加字段
+************** 提取row data 并新增字段 end **************
+
+
