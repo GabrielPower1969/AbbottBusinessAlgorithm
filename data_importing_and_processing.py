@@ -1,5 +1,7 @@
 import pandas as pd
-from common import FINAL_RX_DATA_PATH, PHARMACODE_ORDERTEMPLATE_DICT_PATH, HOLDING_FEE, DELIVERY_CHARGE, ORDERFORM_TEMPLATE_SRC
+from common import FINAL_RX_DATA_PATH, PHARMACODE_ORDERTEMPLATE_DICT, HOLDING_FEE, DELIVERY_CHARGE
+from MyLogger import logger
+from CSVReader import CSVReader
 
 
 # 1) Information processing purpose ONE: Import and process Special Food order entry data
@@ -26,8 +28,8 @@ def handle_special_conditions(rows):
     modified_rows = []
     
     for row in rows:
-        modified_row = row.replace(",,", ",\"\",") # add space between commas for later spliting 
-        if HOLDING_FEE in modified_row or DELIVERY_CHARGE in modified_row:
+        modified_row = row.replace(",,", ",\"\",") # add space between commas for later spliting
+        if str(HOLDING_FEE) in modified_row or str(DELIVERY_CHARGE) in modified_row:
             pass
         else:
             modified_rows.append(modified_row)
@@ -57,46 +59,56 @@ def export_clean_rx_data(modified_row):
         outfile.write(f"{row}\n")
     outfile.close()
 
-
 def data_processing(input_file):
     """main function to import data, process data, check for duplicates and then save the clean data to 'data/final_rx.txt'"""
     rows = read_dataset(input_file)
     modified_rows = handle_special_conditions(rows)
     check_data(modified_rows)
     export_clean_rx_data(modified_rows)
+    csv_reader = CSVReader(input_file)
+    return get_last_avaliable_rows_list(csv_reader)
 
-# 2) Information processing purpose TWO: Read Abbott brand Special Food products dictionary 
-def read_template_dict():
-    """Read the Abbott product dictionary from Abbott product data file, 'pharmacode_ordertemplate_dict' in the 'data' foler
-    This function is called whenever information of an Abbott Special Food product is needed 
-    :param PHARMACODE_ORDERTEMPLATE_DICT_PATH: The path to the file containing the product dictionary, 'data/pharmacode_ordertemplate_dict.config'
-    :return: A dictionary 'PHARMACODE_ORDERTEMPLATE_DICT' mapping product codes to template details
-    """
+def get_last_avaliable_rows_list(csv_reader_obj):
+    list = []
+    patient_name = ""
+    for i in range(len(csv_reader_obj.df)):
+        row_dict = csv_reader_obj.get_row_by_index(-1-i)
+        if row_dict['Pharmacode'] == HOLDING_FEE or row_dict['Pharmacode'] == DELIVERY_CHARGE:
+            continue
+        else:
+            list.append(row_dict)
+            patient_name = row_dict['Patient Name']
+            Pharmacode = row_dict['Pharmacode']
+            try:
+                template_name = PHARMACODE_ORDERTEMPLATE_DICT[Pharmacode][0]
+            except KeyError:
+                logger.warning(f"Pharmacode '{Pharmacode}' not found in PHARMACODE_ORDERTEMPLATE_DICT.")
+                return []
 
-    PHARMACODE_ORDERTEMPLATE_DICT = {}
-    
-    infile = open(PHARMACODE_ORDERTEMPLATE_DICT_PATH)
-    rows = infile.read().splitlines()
-    infile.close()
+            while True:
+                i += 1
+                next_row_index = -1-i
+                if -len(csv_reader_obj.df) <= next_row_index < len(csv_reader_obj.df):
+                    next_row_Pharmacode = csv_reader_obj.get_value(next_row_index, 'Pharmacode')
+                    try:
+                        next_row_template_name = PHARMACODE_ORDERTEMPLATE_DICT[next_row_Pharmacode][0]
+                    except KeyError:
+                        logger.warning(f"Pharmacode '{next_row_Pharmacode}' not found in PHARMACODE_ORDERTEMPLATE_DICT.")
+                    if csv_reader_obj.get_value(next_row_index, 'Patient Name') == patient_name and next_row_template_name == template_name:
+                        list.append(csv_reader_obj.get_row_by_index(next_row_index))
+                        continue
+                    else:
+                        return list
+                else:
+                    return list
 
-    index = 1
-    while index < len(rows):
-        items = rows[index].split(',')
-        product_code = items[0]
-        # 拼接模板文件绝对路径
-        template_path = f"{ORDERFORM_TEMPLATE_SRC}/{items[1]}"
-        pack_divisor = int(items[2])
-        product_name = items[3]
-        outer_divisor = int(items[4])
-        PHARMACODE_ORDERTEMPLATE_DICT[product_code] = (template_path, pack_divisor, product_name, outer_divisor)
-        index += 1
-
-    return PHARMACODE_ORDERTEMPLATE_DICT
 
 # For testing purpose only, please run the main function() from 'abbott_app.py'
 if __name__ == "__main__":
     """When main is called, the data processing function of this file will be used"""
-    data_processing()
+    last_list = (data_processing("D:\\workspace\\rx.txt"))
+    for row in last_list:
+        print(row)
 
 
 

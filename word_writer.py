@@ -3,6 +3,7 @@ from docx.shared import Inches, Pt, RGBColor
 from docx.enum.section import WD_ORIENT
 from docx.enum.text import WD_LINE_SPACING
 import re
+from MyLogger import logger
 
 class WordWriter:
     def __init__(self, template_file, data_dict):
@@ -97,7 +98,7 @@ class WordWriter:
             parts = re.split(r'(\{.*?\})', line)
             for part in parts:
                 if part.startswith('{') and part.endswith('}'):
-                    content = part[1:-1]
+                    content = part[1:-1] # get the content between the curly braces
                     if ':' in content:
                         key, style_string = content.split(': ')
                         style_info = self.parse_style(style_string)
@@ -107,12 +108,12 @@ class WordWriter:
                             self.apply_style(run, style_info)
                         else:
                             if key in self.data_dict:
-                                print(f"Inserting data for key: {key}")
                                 value = str(self.data_dict[key])
                                 run = p.add_run(value)
                                 self.apply_style(run, style_info)
                             else:
-                                raise ValueError(f"The template placeholder is incorrectly configured‘{key}’inexistence")
+                                logger.error(f"The template placeholder is incorrectly configured‘{key}’inexistence")
+                                break
                     else:
                         run = p.add_run(part)
                 else:

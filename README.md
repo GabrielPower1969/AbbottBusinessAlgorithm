@@ -56,14 +56,18 @@ coll = COLLECT(
 pyinstaller --onefile --add-data "D:\\workspace\\Abbott\\SpecialFood_0727\\_internal;main/_internal" --add-data "D:\\workspace\\Abbott\\SpecialFood_0727\\orderform_template_src;orderform_template_src" --add-data "D:\\workspace\\Abbott\\SpecialFood_0727\\data;data" main.py
 
 
-************** 修改模板配置语法或者添加字段 begin **************
+************** 修改 txt模板 配置语法或者添加字段 begin **************
 def parse_style(self, style_string):
 def apply_style(self, run, style_info):
 ************** 修改模板配置语法或者添加字段 end **************
 
-
 ************** 提取row data 并新增字段 begin **************
 get_order_template_data（）方法中添加字段
 ************** 提取row data 并新增字段 end **************
+
+************** 测试模板 Begin **************
+python .\main.py 'D:\workspace\rx.txt' 'D:\workspace\080413_docx.docx'; Start-Process "winword.exe" -ArgumentList "D:\workspace\080413_docx.docx"
+************** 测试模板 end **************
+
 
 
