@@ -1,5 +1,5 @@
 import pandas as pd
-from common import FINAL_RX_DATA_PATH, PHARMACODE_ORDERTEMPLATE_DICT, HOLDING_FEE, DELIVERY_CHARGE
+from abbott_common import FINAL_RX_DATA_PATH, PHARMACODE_ORDERTEMPLATE_DICT, HOLDING_FEE, DELIVERY_CHARGE
 from MyLogger import logger
 from CSVReader import CSVReader
 

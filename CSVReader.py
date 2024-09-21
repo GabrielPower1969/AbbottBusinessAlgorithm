@@ -1,5 +1,5 @@
 import pandas as pd
-from common import HOLDING_FEE, DELIVERY_CHARGE
+from abbott_common import HOLDING_FEE, DELIVERY_CHARGE
 import warnings
 from MyLogger import logger
 
