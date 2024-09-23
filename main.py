@@ -35,13 +35,12 @@ def main(args):
 
     last_avaliable_rows_list = data_processing(config["INPUT_FILE"])
     print(f"last_avaliable_rows_list is {last_avaliable_rows_list}")
-    processor = DataProcessor(FINAL_RX_DATA_PATH)
-    latest_data = processor.get_latest_row()
+    processor = DataProcessor()
     template_data_dict = processor.get_order_template_data(last_avaliable_rows_list, config)
 
     logger.info(f"template_data_dict is {template_data_dict}")
     output_template_file = processor.get_order_template()
-    logger.info(f"获取的txt模板是 {output_template_file}")
+    logger.info(f"The obtained txt template is {output_template_file}")
 
     writer = WordWriter(output_template_file, template_data_dict)
     writer.write_to_word(config['OUTPUT_FILE'])

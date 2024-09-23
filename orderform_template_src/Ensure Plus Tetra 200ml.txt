@@ -1,5 +1,5 @@
-To CDC Pharmaceuticals                                                                      {N_d_selection: font=Arial}Normal delivery / {U_selection: font=Arial}Urgent
-CHRISTCHURCH                                                                                      {S_selection: font=Arial}Standard / {U_A_selection: font=Arial}Urgent_ATL
+To CDC Pharmaceuticals                                                                      {N_d_selection: font=Arial} Normal delivery / {U_selection: font=Arial} Urgent
+CHRISTCHURCH                                                                                     {S_selection: font=Arial} Standard / {U_A_selection: font=Arial} Urgent_ATL
 EMAIL: healthworks@cdc.co.nz                                                         {Rx Date: font=Arial, size=9}
 _______________________________________________________________________________________________________________________
 Charge to:                                                                   | Deliver to:
