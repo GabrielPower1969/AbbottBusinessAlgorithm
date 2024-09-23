@@ -5,23 +5,8 @@ from MyLogger import logger
 
 
 class DataProcessor:
-    def __init__(self, filepath):
-        self.filepath = filepath
+    def __init__(self, ):
         self.target_pharmacode = 0
-
-    def get_latest_row(self):
-        """
-        Get the last row of data from the file.
-        :return: The latest row of data as a string.
-        """
-        with open(self.filepath, 'r') as infile:
-            rows = infile.read().splitlines()
-
-        latest_row = None
-        for row in rows[1:]:
-            if row.strip() != "":
-                latest_row = row
-        return latest_row
 
     def get_order_template(self):
         """
@@ -39,8 +24,6 @@ class DataProcessor:
             print(f"Pharmacode {self.target_pharmacode} not found in PHARMACODE_ORDERTEMPLATE_DICT.")
             raise KeyError(f"Pharmacode {self.target_pharmacode} not found in PHARMACODE_ORDERTEMPLATE_DICT.")
             return ""
-
-
 
     def get_order_template_data(self, latest_data_list, config):
         '''
@@ -67,9 +50,6 @@ class DataProcessor:
             order_template_data_dict["U_A_selection"] = "√"
         else:
             order_template_data_dict["S_selection"] = "√"
-
-
-
 
         # Multi-lines status
         if len(latest_data_list) > 0:
