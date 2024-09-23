@@ -1,7 +1,6 @@
 import os
 import sys
 import json
-from abbott_common import FINAL_RX_DATA_PATH
 from data_processor import DataProcessor
 from word_writer import WordWriter
 from data_importing_and_processing import data_processing
