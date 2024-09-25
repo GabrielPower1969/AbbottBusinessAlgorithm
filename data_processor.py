@@ -31,10 +31,8 @@ class DataProcessor:
         '''
 
         order_template_data_dict = {
-            "N_d_selection": "√" if not config["IS_URGENT"] else "□",
-            "U_selection": "√" if config["IS_URGENT"] else "□",
-            "S_selection": "√" if not config["IS_ATL"] else "□",
-            "U_A_selection": "√" if config["IS_ATL"] else "□"
+            "Express_Delivery": "Normal delivery" if not config["IS_URGENT"] else "urgent",
+            "Urgent_ATL": "No" if config["IS_ATL"] else "Yes",
         }
 
         if latest_data_list:
@@ -46,7 +44,7 @@ class DataProcessor:
                 "pharmacode": data['Pharmacode'],
                 "NHI": data['Patient NHI'],
                 "Rx Date": data['Rx Date'].split(" ")[0],
-                "Note": data['Note'] if isinstance(data['Note'], str) and data['Note'] != "" else ""
+                "Note": config["NOTE"] if config["NOTE"] else ""
             })
 
             for i, row in enumerate(latest_data_list):
@@ -54,9 +52,6 @@ class DataProcessor:
                     f"Rx Number_{i}": row['Rx Number'],
                     f"Qty (x100)_{i}": int(row['Qty (x100)'] / 100)
                 })
-                if isinstance(row['Note'], str) and row['Note'] != "":
-                    order_template_data_dict["Note"] = row['Note']
-                logger.info(f"Note: {row['Note']}")
                 try:
                     product_details = PHARMACODE_ORDERTEMPLATE_DICT[self.target_pharmacode]
                     pack_divisor, outer_divisor = product_details[1], product_details[3]

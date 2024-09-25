@@ -12,7 +12,8 @@ def load_config(args):
         "OUTPUT_FILE": args["outputFilePath"],
         "IS_ATL": args["is_ATL"],
         "IS_URGENT": args["is_urgent"],
-        "OVERWRITE_ADDR": args["overwrite_addr"]
+        "OVERWRITE_ADDR": args["overwrite_addr"],
+        "NOTE": args["note"]
     }
 
 def validate_input_file(input_file):
@@ -27,7 +28,7 @@ def ensure_output_path_exists(output_file):
 
 def main(args):
     config = load_config(args)
-    logger.info(f"***************** start main *****************\n input_file is {config['INPUT_FILE']}\n output_file is {config['OUTPUT_FILE']}\n is_atl is {config['IS_ATL']}\n is_urgent is {config['IS_URGENT']}\n overwrite_addr is {config['OVERWRITE_ADDR']}")
+    logger.info(f"***************** start main *****************\n input_file is {config['INPUT_FILE']}\n output_file is {config['OUTPUT_FILE']}\n is_atl is {config['IS_ATL']}\n is_urgent is {config['IS_URGENT']}\n overwrite_addr is {config['OVERWRITE_ADDR']}\n note is {config['NOTE']}\n")
 
     validate_input_file(config["INPUT_FILE"])
     ensure_output_path_exists(config['OUTPUT_FILE'])

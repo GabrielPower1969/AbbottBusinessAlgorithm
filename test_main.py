@@ -47,6 +47,6 @@ class TestMain(unittest.TestCase):
 
 if __name__ == "__main__":
         # 模拟正确的 JSON 参数
-        json_args = '{"inputFilePath": "D:\\\\workspace\\\\rx.txt", "outputFilePath": "D:\\\\workspace\\\\output_test.docx", "is_ATL": false, "is_urgent": false, "overwrite_addr": "addr_test_demo"}'
+        json_args = '{"inputFilePath": "D:\\\\workspace\\\\rx.txt", "outputFilePath": "D:\\\\workspace\\\\output_test.docx", "is_ATL": false, "is_urgent": false, "overwrite_addr": "addr_test_demo", "note": "note_test_demo"}'
         args = json.loads(json_args)
         main(args)
