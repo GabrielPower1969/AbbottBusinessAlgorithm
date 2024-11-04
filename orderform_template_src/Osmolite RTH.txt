@@ -1,24 +1,14 @@
-To CDC Pharmaceuticals
-CHRISTCHURCH	
-EMAIL:healthworks@cdc.co.nz
-
-Charge to:		
-Unichem Ilam Healthworks Pharmacy
-Tenancy #1
-110 Memorial Avenue
-Christchurch	
-
-#################################################################
-Deliver to:		
-Name:
-Address:
-	
-
-
-#################################################################
-
+To CDC Pharmaceuticals                                                                      Express Delivery: {Express_Delivery: font=Arial, bold=True}
+CHRISTCHURCH                                                                                     Urgent ATL: {Urgent_ATL: font=Arial, bold=True}
+EMAIL: healthworks@cdc.co.nz                                                         {Rx Date: font=Arial, size=9}
+_______________________________________________________________________________________________________________________
+Charge to:                                                                   | Deliver to:
+Unichem Ilam Healthworks Pharmacy              | Name: {name: font=Arial, bold=True}
+Tenancy #1                                                                | Address: {address: font=Arial, bold=True}
+110 Memorial Avenue                                            | NHI: {NHI: font=Arial, bold=True}
+Christchurch                                                              |Note : {Note: font=Arial, bold=True}
+{*content*Osmolite RTH: font=Arial, size=19, bold=True, color=0000FF}
 Please supply:
-
 Osmolite RTH (1000ml)
-______Trays of 8
-P/Code: 2217155
+		{2217155: font=Arial, size=12, bold=True}  Trays of 8 P/Code: 2217155
+{Rx Number_0: size=9}/{Rx Date: font=Arial, size=9}/{Qty (x100)_0: size=9} * {Rx Number_1: size=9}/{Rx Date: font=Arial, size=9}/{Qty (x100)_1: size=9} * {Rx Number_2: size=9}/{Rx Date: font=Arial, size=9}/{Qty (x100)_2: size=9} * {Rx Number_3: size=9}/{Rx Date: font=Arial, size=9}/{Qty (x100)_3: size=9}

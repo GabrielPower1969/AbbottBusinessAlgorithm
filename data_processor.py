@@ -17,7 +17,7 @@ class DataProcessor:
             product_details = PHARMACODE_ORDERTEMPLATE_DICT[self.target_pharmacode]
             return product_details[0]
         except KeyError:
-            logger.error(f"Pharmacode {self.target_pharmacode} not found in PHARMACODE_ORDERTEMPLATE_DICT.")
+            logger.error(f"[get_order_template] Pharmacode {self.target_pharmacode} not found in PHARMACODE_ORDERTEMPLATE_DICT.")
             return ""
 
     def get_order_template_data(self, latest_data_list, config):
@@ -31,7 +31,7 @@ class DataProcessor:
         '''
 
         order_template_data_dict = {
-            "Express_Delivery": "Normal delivery" if not config["IS_URGENT"] else "urgent",
+            "Express_Delivery": "Normal delivery" if not config["IS_URGENT"] else "Urgent delivery",
             "Urgent_ATL": "No" if config["IS_ATL"] else "Yes",
         }
 
@@ -55,9 +55,19 @@ class DataProcessor:
                 try:
                     product_details = PHARMACODE_ORDERTEMPLATE_DICT[self.target_pharmacode]
                     pack_divisor, outer_divisor = product_details[1], product_details[3]
-                    order_template_data_dict[str(row['Pharmacode'])] = int(row['Qty (x100)'] / (pack_divisor * outer_divisor))
+                    # order_template_data_dict[str(row['Pharmacode'])]  is exit, then overlay it
+                    # data_processor.py
+                    pharmacode = str(row['Pharmacode'])
+                    quantity = int(row['Qty (x100)'] / (pack_divisor * outer_divisor))
+                    
+                    if pharmacode in order_template_data_dict:
+                        order_template_data_dict[pharmacode] += quantity
+                    else:
+                        order_template_data_dict[pharmacode] = quantity
+                    
+                    logger.info(f"Pharmacode is {row['Pharmacode']}, Qty (x100) is {row['Qty (x100)']} pack_divisor: {pack_divisor}, outer_divisor: {outer_divisor}")
                 except KeyError:
-                    logger.error(f"Pharmacode {self.target_pharmacode} not found in PHARMACODE_ORDERTEMPLATE_DICT.")
+                    logger.error(f"[get_order_template_data] Pharmacode {self.target_pharmacode} not found in PHARMACODE_ORDERTEMPLATE_DICT.")
                     return {}
 
         return order_template_data_dict

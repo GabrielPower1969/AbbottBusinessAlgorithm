@@ -4,7 +4,7 @@ EMAIL: healthworks@cdc.co.nz                                                    
 _______________________________________________________________________________________________________________________
 Charge to:                                                                   | Deliver to:
 Unichem Ilam Healthworks Pharmacy              | Name: {name: font=Arial, bold=True}
-Tenancy #1                                                                | Address: {address: font=Arial, bold=True}
+Tenancy #1                                | Address: {address: font=Arial, bold=True}
 110 Memorial Avenue                                            | NHI: {NHI: font=Arial, bold=True}
 Christchurch                                                              |Note : {Note: font=Arial, bold=True}
 {*content*Ensure Plus Tetra (200ml): font=Arial, size=19, bold=True, color=0000FF}

@@ -73,7 +73,7 @@ def get_last_avaliable_rows_list(csv_reader_obj):
     patient_name = ""
     for i in range(len(csv_reader_obj.df)):
         row_dict = csv_reader_obj.get_row_by_index(-1-i)
-        if row_dict['Pharmacode'] == HOLDING_FEE or row_dict['Pharmacode'] == DELIVERY_CHARGE:
+        if row_dict['Pharmacode'] == HOLDING_FEE or row_dict['Pharmacode'] == DELIVERY_CHARGE or row_dict['Pharmacode'] not in PHARMACODE_ORDERTEMPLATE_DICT.keys():
             continue
         else:
             list.append(row_dict)
@@ -82,7 +82,7 @@ def get_last_avaliable_rows_list(csv_reader_obj):
             try:
                 template_name = PHARMACODE_ORDERTEMPLATE_DICT[Pharmacode][0]
             except KeyError:
-                logger.warning(f"Pharmacode '{Pharmacode}' not found in PHARMACODE_ORDERTEMPLATE_DICT.")
+                logger.warning(f"first get Pharmacode '{Pharmacode}' not found in PHARMACODE_ORDERTEMPLATE_DICT.")
                 return []
 
             while True:

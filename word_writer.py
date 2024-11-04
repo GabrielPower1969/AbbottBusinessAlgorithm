@@ -112,7 +112,7 @@ class WordWriter:
                                 run = p.add_run(value)
                                 self.apply_style(run, style_info)
                             else:
-                                logger.error(f"The template placeholder is incorrectly configured‘{key}’inexistence")
+                                logger.warning(f"The template placeholder is incorrectly configured‘{key}’inexistence")
                                 break
                     else:
                         run = p.add_run(part)

@@ -12,7 +12,7 @@ class TestMain(unittest.TestCase):
     @patch("os.makedirs")
     def test_main_receive_json(self, mock_makedirs, mock_isfile, mock_print, mock_open):
         # 模拟正确的 JSON 参数
-        json_args = '{"inputFilePath": "D:\\\\workspace\\\\rx.txt", "outputFilePath": "D:\\\\workspace\\\\output.docx", "is_ATL": true, "is_urgent": false, "overwrite_addr": "addr"}'
+        json_args = r'{"inputFilePath": "D:\\workspace\\rx.txt", "outputFilePath": "D:\\workspace\\output.docx", "is_ATL": true, "is_urgent": false, "overwrite_addr": "addr"}'
         args = json.loads(json_args)
         main(args)
 
@@ -28,7 +28,7 @@ class TestMain(unittest.TestCase):
     @patch("builtins.print")
     def test_main_json_decode_error(self, mock_print, mock_open):
         # 模拟 JSON 解码错误
-        json_args = '{"inputFilePath": "D:\\\\workspace\\\\rx.txt", "outputFilePath": "D:\\\\workspace\\\\output.docx", "is_ATL": true, "is_urgent": false, "overwrite_addr": "addr"'
+        json_args = r'{"inputFilePath": "D:\\workspace\\rx.txt", "outputFilePath": "D:\\workspace\\output.docx", "is_ATL": true, "is_urgent": false, "overwrite_addr": "addr"'
 
         with self.assertRaises(SystemExit):
             try:
