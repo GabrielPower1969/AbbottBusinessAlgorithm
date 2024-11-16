@@ -1,5 +1,5 @@
-To CDC Pharmaceuticals                                                                      Express Delivery: {Express_Delivery: font=Arial, bold=True}
-CHRISTCHURCH                                                                                     Urgent ATL: {Urgent_ATL: font=Arial, bold=True}
+To CDC Pharmaceuticals                                                                      Delivery: {Express_Delivery: font=Arial, bold=True}
+CHRISTCHURCH                                                                                     ATL: {Urgent_ATL: font=Arial, bold=True}
 EMAIL: healthworks@cdc.co.nz                                                         {Rx Date: font=Arial, size=9}
 _______________________________________________________________________________________________________________________
 Charge to:                                                                   | Deliver to:
@@ -8,6 +8,7 @@ Tenancy #1                                                                | Addr
 110 Memorial Avenue                                            | NHI: {NHI: font=Arial, bold=True}
 Christchurch                                                              |Note : {Note: font=Arial, bold=True}
 {*content*Ensure Powder: font=Arial, size=19, bold=True, color=0000FF}
+Please supply:
 Ensure POWDER 850gm
 Vanilla:		               {2504316: font=Arial, size=12, bold=True} TINS x P/Code: 2504316
 Chocolate:		{2504324: font=Arial, size=12, bold=True} TINS x P/Code: 2504324

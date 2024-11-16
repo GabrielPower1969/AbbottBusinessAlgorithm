@@ -2,6 +2,7 @@ from docx import Document
 from docx.shared import Inches, Pt, RGBColor
 from docx.enum.section import WD_ORIENT
 from docx.enum.text import WD_LINE_SPACING
+import os
 import re
 from MyLogger import logger
 
@@ -122,3 +123,45 @@ class WordWriter:
         # Save the document to the specified output file
         document.save(output_file)
         print(f"Order form saved as {output_file}")
+
+    def merge_word_documents(self, files, output_file):
+        """
+        Merge multiple Word documents into a single document
+
+        Args:
+            files (list): List of file paths to merge
+            output_file (str): Output file path for merged document
+        """
+        # 直接使用第一个非空的文档作为基础
+        merged_doc = None
+        first_doc_index = -1
+
+        # 找到第一个有内容的文档
+        for i, file in enumerate(files):
+            doc = Document(file)
+            if any(paragraph.text.strip() for paragraph in doc.paragraphs):
+                merged_doc = doc
+                first_doc_index = i
+                break
+
+        if merged_doc is None:
+            logger.error("No valid document found to merge")
+            return
+
+        # 从下一个文档开始合并
+        for file in files[first_doc_index + 1:]:
+            sub_doc = Document(file)
+            # 直接添加内容，不添加分页符
+            if any(paragraph.text.strip() for paragraph in sub_doc.paragraphs):
+                for element in sub_doc.element.body:
+                    merged_doc.element.body.append(element)
+
+        # 保存合并后的文档
+        merged_doc.save(output_file)
+
+        # 清理临时文件
+        for file in files[1:]:
+            try:
+                os.remove(file)
+            except Exception as e:
+                logger.warning(f"Failed to remove temporary file {file}: {str(e)}")

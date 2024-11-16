@@ -66,7 +66,55 @@ def data_processing(input_file):
     check_data(modified_rows)
     export_clean_rx_data(modified_rows)
     csv_reader = CSVReader(input_file)
-    return get_last_avaliable_rows_list(csv_reader)
+    return get_mutiple_templates_data_list(csv_reader)
+
+def get_mutiple_templates_data_list(csv_reader_obj):
+    list_total = []
+    current_list = []
+    patient_name = ""
+    current_template = ""
+
+    for i in range(len(csv_reader_obj.df)):
+        row_dict = csv_reader_obj.get_row_by_index(-1-i)
+
+        # Skip non-template rows
+        if row_dict['Pharmacode'] == HOLDING_FEE or row_dict['Pharmacode'] == DELIVERY_CHARGE or row_dict['Pharmacode'] not in PHARMACODE_ORDERTEMPLATE_DICT.keys():
+            continue
+
+        # Get template name for current row
+        try:
+            template_name = PHARMACODE_ORDERTEMPLATE_DICT[row_dict['Pharmacode']][0]
+        except KeyError:
+            logger.warning(f"Pharmacode '{row_dict['Pharmacode']}' not found in PHARMACODE_ORDERTEMPLATE_DICT.")
+            continue
+
+        # If this is the first valid row
+        if not patient_name:
+            patient_name = row_dict['Patient Name']
+            current_template = template_name
+            current_list.append(row_dict)
+            continue
+
+        # If patient name changes, return results
+        if row_dict['Patient Name'] != patient_name:
+            if current_list:
+                list_total.append(current_list)
+            return list_total
+
+        # If template changes but patient is same
+        if template_name != current_template:
+            list_total.append(current_list)
+            current_list = [row_dict]
+            current_template = template_name
+        # If template and patient are same
+        else:
+            current_list.append(row_dict)
+
+    # Add final list if exists
+    if current_list:
+        list_total.append(current_list)
+
+    return list_total
 
 def get_last_avaliable_rows_list(csv_reader_obj):
     list = []
@@ -81,6 +129,7 @@ def get_last_avaliable_rows_list(csv_reader_obj):
             Pharmacode = row_dict['Pharmacode']
             try:
                 template_name = PHARMACODE_ORDERTEMPLATE_DICT[Pharmacode][0]
+                print(f"\n\ntemplate_name is {template_name}\n\n")
             except KeyError:
                 logger.warning(f"first get Pharmacode '{Pharmacode}' not found in PHARMACODE_ORDERTEMPLATE_DICT.")
                 return []
